@@ -38,7 +38,7 @@ subplot(2, 1, 2);
 plot(f, AudioMultiplexNoisy, 'k');
 title('Multiplexed Audio Signal (Frequency Domain)');
 xlabel('Frequency [Hz]');
-ylabel('Magnitude');
+ylabel('Amplitude');
 
 % 1.2 Demodulate the signals in the frequency domain, listen, and plot.
 
@@ -60,6 +60,21 @@ firstSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
 
 %sound(firstSignalFiltered, fs);
 
+FirstSignalDemodulated =  fftshift(fft(firstSignalDemodulated)) / fs;
+
+figure;
+subplot(2, 1, 1);
+plot(t, firstSignalDemodulated, 'k');
+xlabel('Time (seconds)');
+ylabel('Amplitude');
+title('First Signal Demodulated (Time Domain)');
+
+subplot(2, 1, 2);
+plot(f, FirstSignalDemodulated, 'k');
+xlabel('Frequency [Hz]');
+ylabel('Amplitude');
+title('First Signal Demodulated (Frequency Domain)');
+
 % Second signal centred at 40.27 kHz
 carrierFrequency = 40270;
 
@@ -68,6 +83,21 @@ carrierSignal = cos(2*pi*carrierFrequency*t);
 secondSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
 
 %sound(secondSignalDemodulated, fs);
+
+SecondSignalDemodulated =  fftshift(fft(secondSignalDemodulated)) / fs;
+
+figure;
+subplot(2, 1, 1);
+plot(t, secondSignalDemodulated, 'k');
+xlabel('Time (seconds)');
+ylabel('Amplitude');
+title('Second Signal Demodulated (Time Domain)');
+
+subplot(2, 1, 2);
+plot(f, SecondSignalDemodulated, 'k');
+xlabel('Frequency [Hz]');
+ylabel('Amplitude');
+title('Second Signal Demodulated (Frequency Domain)');
 
 % Third signal centred at 56.17 kHz
 carrierFrequency = 56170;
@@ -78,6 +108,21 @@ thirdSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
 
 %sound(thirdSignalDemodulated, fs);
 
+ThirdSignalDemodulated =  fftshift(fft(thirdSignalDemodulated)) / fs;
+
+figure;
+subplot(2, 1, 1);
+plot(t, thirdSignalDemodulated, 'k');
+xlabel('Time (seconds)');
+ylabel('Amplitude');
+title('Third Signal Demodulated (Time Domain)');
+
+subplot(2, 1, 2);
+plot(f, ThirdSignalDemodulated, 'k');
+xlabel('Frequency [Hz]');
+ylabel('Amplitude');
+title('Third Signal Demodulated (Frequency Domain)');
+
 % Fourth signal centred at 72.29 kHz
 carrierFrequency = 72290;
 
@@ -87,3 +132,17 @@ fourthSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
 
 %sound(fourthSignalDemodulated, fs);
 
+FourthSignalDemodulated =  fftshift(fft(fourthSignalDemodulated)) / fs;
+
+figure;
+subplot(2, 1, 1);
+plot(t, fourthSignalDemodulated, 'k');
+xlabel('Time (seconds)');
+ylabel('Amplitude');
+title('Fourth Signal Demodulated (Time Domain)');
+
+subplot(2, 1, 2);
+plot(f, FourthSignalDemodulated, 'k');
+xlabel('Frequency [Hz]');
+ylabel('Amplitude');
+title('Fourth Signal Demodulated (Frequency Domain)');
