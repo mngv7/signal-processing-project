@@ -43,7 +43,6 @@ ylabel('Amplitude');
 % 1.2 Demodulate the signals in the frequency domain, listen, and plot.
 
 % Signals probably need filtering?
-% Plot time and frequency domain of each signal.
 
 % Frequencies to demodulate:
 % 24.33 kHz
@@ -58,7 +57,7 @@ carrierSignal = cos(2*pi*carrierFrequency*t);
 
 firstSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
 
-%sound(firstSignalFiltered, fs);
+%sound(firstSignalDemodulated, fs);
 
 FirstSignalDemodulated =  fftshift(fft(firstSignalDemodulated)) / fs;
 
@@ -146,3 +145,12 @@ plot(f, FourthSignalDemodulated, 'k');
 xlabel('Frequency [Hz]');
 ylabel('Amplitude');
 title('Fourth Signal Demodulated (Frequency Domain)');
+
+% 1.3 Frequency and impulse response of the LTI system
+
+% Vout(t)/Vin(t) = h(t)
+% The output 'y' is the convolution of the input 'x' and the transfer function 'h'.
+
+
+y = channel(sid, x, fs);
+Y =  fftshift(fft(y)) / fs;
