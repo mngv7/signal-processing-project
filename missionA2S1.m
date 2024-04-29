@@ -152,15 +152,42 @@ title('Fourth Signal Demodulated (Frequency Domain)');
 % The output 'y' is the convolution of the input 'x' and the transfer function 'h'.
 
 
-y = channel(sid, fourthSignalDemodulated, fs);
-h_t = y./fourthSignalDemodulated;
-h_f = fftshift(fft(h_t)) / fs;
-% Y =  fftshift(fft(y)) / fs;
+y = channel(sid, audioMultiplexNoisy, fs);
+Y = fftshift(fft(y)) / fs;
+H_f = Y ./ AudioMultiplexNoisy; % check if this needs to be a different test signal
 
 figure;
-plot(f, abs(h_f), 'r', f, abs(AudioMultiplexNoisy), 'b'); % currently plotting incorrectly, will need to check tomorrow
+plot(f, abs(H_f), 'r', f, abs(AudioMultiplexNoisy), 'b');
+legend('H(f)', 'AudioMultiplexNoisy')
 xlabel('Frequency [Hz]');
 ylabel('Magnitude');
 title('Frequency response of H(f) against magntude spectrum of AudioMultiplexNoisy')
 grid on;
+
+%% 1.4 Reverse distortion
+AudioMultiplexReverse = Y ./ H_f;
+audioMultiplexReverse = ifft(ifftshift(AudioMultiplexReverse)) * fs;
+
+% Demodulate signal again
+carrierFrequency = 24330;
+
+carrierSignal = cos(2*pi*carrierFrequency*t);
+demodAudioMultiplexReverse = audioMultiplexReverse .* carrierSignal;
+
+
+DemodAudioMultiplexReverse = fftshift(fft(demodAudioMultiplexReverse)) / fs;
+
+% plot in time and frequency domains
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Demodulated multiplexed audio signal with reversed distortion (Time Domain)');
+subplot(2,1,2);
+plot(f, DemodAudioMultiplexReverse, 'r');
+xlabel('Frequency [Hz]');
+ylabel('Amplitude');
+title('Demodulated multiplexed audio signal with reversed distortion (Frequency Domain)');
+
 
