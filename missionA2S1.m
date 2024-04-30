@@ -173,6 +173,7 @@ title('Fifth Signal Demodulated (Frequency Domain)');
 %% 1.3 Frequency and impulse response of the LTI system
 
 % Vout(t)/Vin(t) = h(t)
+% Vout(f)/Vin(f) = H(f)
 % The output 'y' is the convolution of the input 'x' and the transfer function 'h'.
 
 
@@ -198,6 +199,8 @@ carrierFrequency = 24330;
 
 carrierSignal = cos(2*pi*carrierFrequency*t);
 demodAudioMultiplexReverse = audioMultiplexReverse .* carrierSignal;
+
+% ADD LOWPASS FILTER
 
 %sound(demodAudioMultiplexReverse, fs);
 
