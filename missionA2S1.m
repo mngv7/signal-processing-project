@@ -199,7 +199,7 @@ carrierFrequency = 24330;
 carrierSignal = cos(2*pi*carrierFrequency*t);
 demodAudioMultiplexReverse = audioMultiplexReverse .* carrierSignal;
 
-%sound(demodAudioMultiplexReverse, fs);
+sound(demodAudioMultiplexReverse, fs);
 
 DemodAudioMultiplexReverse = ft(demodAudioMultiplexReverse, fs);
 
@@ -216,7 +216,7 @@ xlabel('Frequency [Hz]');
 ylabel('Amplitude');
 title('Demodulated multiplexed audio signal with reversed distortion (Frequency Domain)');
 
-
+%% 1.5 Fully de-noising audio
 
 
 %% helper functions
