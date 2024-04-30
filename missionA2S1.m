@@ -199,7 +199,7 @@ carrierFrequency = 24330;
 carrierSignal = cos(2*pi*carrierFrequency*t);
 demodAudioMultiplexReverse = audioMultiplexReverse .* carrierSignal;
 
-sound(demodAudioMultiplexReverse, fs);
+%sound(demodAudioMultiplexReverse, fs);
 
 DemodAudioMultiplexReverse = ft(demodAudioMultiplexReverse, fs);
 
