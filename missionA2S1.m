@@ -5,7 +5,7 @@
 % described in the assignment task.
 
 %% Initialise workspace
-clear all; close all;
+clear all; %close all;
 load DataA2 audioMultiplexNoisy fs sid;
 
 % Begin writing your MATLAB solution below this line.
@@ -52,11 +52,11 @@ ylabel('Amplitude');
 % 72.29 kHz
 
 % First signal centred at 8.05 kHz.
-carrierFrequency = 8050;
+carrierFrequency2 = 8050;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
 
-firstSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
+firstSignalDemodulated = audioMultiplexNoisy .* carrierSignal2;
 
 %sound(firstSignalDemodulated, fs);
 
@@ -76,11 +76,11 @@ ylabel('Amplitude');
 title('First Signal Demodulated (Frequency Domain)');
 
 %% Second signal centred at 24.33 kHz
-carrierFrequency = 24330;
+carrierFrequency2 = 24330;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
 
-secondSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
+secondSignalDemodulated = audioMultiplexNoisy .* carrierSignal2;
 
 %sound(secondSignalDemodulated, fs);
 
@@ -100,11 +100,11 @@ ylabel('Amplitude');
 title('Second Signal Demodulated (Frequency Domain)');
 
 %% Third signal centred at 40.27 kHz
-carrierFrequency = 40270;
+carrierFrequency2 = 40270;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
 
-thirdSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
+thirdSignalDemodulated = audioMultiplexNoisy .* carrierSignal2;
 
 %sound(thirdSignalDemodulated, fs);
 
@@ -124,11 +124,11 @@ ylabel('Amplitude');
 title('Third Signal Demodulated (Frequency Domain)');
 
 %% Fourth signal centred at 56.17 kHz
-carrierFrequency = 56170;
+carrierFrequency2 = 56170;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
 
-fourthSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
+fourthSignalDemodulated = audioMultiplexNoisy .* carrierSignal2;
 
 %sound(fourthSignalDemodulated, fs);
 
@@ -148,11 +148,11 @@ ylabel('Amplitude');
 title('Fourth Signal Demodulated (Frequency Domain)');
 
 %% Fifth signal centred at 72.29 kHz
-carrierFrequency = 72290;
+carrierFrequency2 = 72290;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
 
-fifthSignalDemodulated = audioMultiplexNoisy .* carrierSignal;
+fifthSignalDemodulated = audioMultiplexNoisy .* carrierSignal2;
 
 %sound(fifthSignalDemodulated, fs);
 
@@ -173,14 +173,12 @@ title('Fifth Signal Demodulated (Frequency Domain)');
 %% 1.3 Frequency and impulse response of the LTI system
 
 % Vout(t)/Vin(t) = h(t)
-% Vout(f)/Vin(f) = H(f)
 % The output 'y' is the convolution of the input 'x' and the transfer function 'h'.
 
-
-y = channel(sid, audioMultiplexNoisy, fs);
-Y = ft(y, fs);
-H_f = Y ./ AudioMultiplexNoisy; % check if this needs to be a different test signal
-
+impulse = zeros(1, length(audioMultiplexNoisy));
+impulse(1) = 1/(1/fs);
+h_t = channel(sid, impulse, fs);
+H_f = ft(h_t, fs);
 
 figure;
 plot(f, abs(H_f), 'r', f, abs(AudioMultiplexNoisy), 'b');
@@ -191,36 +189,100 @@ title('Frequency response of H(f) against magntude spectrum of AudioMultiplexNoi
 grid on;
 
 %% 1.4 Reverse distortion
-AudioMultiplexReverse = Y ./ H_f;
+
+% Input(f) = Output(f) / H(f)
+AudioMultiplexReverse = AudioMultiplexNoisy ./ H_f;
 audioMultiplexReverse = ift(AudioMultiplexReverse, fs);
 
 % Demodulate signal again
-carrierFrequency = 24330;
+carrierFrequency1 = 8050;
 
-carrierSignal = cos(2*pi*carrierFrequency*t);
-demodAudioMultiplexReverse = audioMultiplexReverse .* carrierSignal;
+carrierSignal1 = cos(2*pi*carrierFrequency1*t);
+demodAudioMultiplexReverse1 = audioMultiplexReverse .* carrierSignal1;
 
-% ADD LOWPASS FILTER
+DemodAudioMultiplexReverse1 = ft(demodAudioMultiplexReverse1, fs);
 
-%sound(demodAudioMultiplexReverse, fs);
+%sound(demodAudioMultiplexReverse1, fs);
 
-DemodAudioMultiplexReverse = ft(demodAudioMultiplexReverse, fs);
+%%
+% Demodulate signal again
+carrierFrequency2 = 24330;
+
+carrierSignal2 = cos(2*pi*carrierFrequency2*t);
+demodAudioMultiplexReverse2 = audioMultiplexReverse .* carrierSignal2;
+
+DemodAudioMultiplexReverse2 = ft(demodAudioMultiplexReverse2, fs);
+
+%sound(DemodAudioMultiplexReverse2, fs);
+
+%%
+% Demodulate signal again
+carrierFrequency3 = 40270;
+
+carrierSignal3 = cos(2*pi*carrierFrequency3*t);
+demodAudioMultiplexReverse3 = audioMultiplexReverse .* carrierSignal3;
+
+DemodAudioMultiplexReverse3 = ft(demodAudioMultiplexReverse3, fs);
+
+%sound(DemodAudioMultiplexReverse3, fs);
+
+%%
+% Demodulate signal again
+carrierFrequency4 = 56170;
+
+carrierSignal4 = cos(2*pi*carrierFrequency4*t);
+demodAudioMultiplexReverse4 = audioMultiplexReverse .* carrierSignal4;
+
+DemodAudioMultiplexReverse4 = ft(demodAudioMultiplexReverse4, fs);
+
+%sound(DemodAudioMultiplexReverse4, fs);
+
+%%
+% Demodulate signal again
+carrierFrequency5 = 72290;
+
+carrierSignal5 = cos(2*pi*carrierFrequency5*t);
+demodAudioMultiplexReverse5 = audioMultiplexReverse .* carrierSignal5;
+
+DemodAudioMultiplexReverse5 = ft(demodAudioMultiplexReverse5, fs);
+
+%sound(DemodAudioMultiplexReverse5, fs);
+
+%% 1.4 Plots
 
 % plot in time and frequency domains
 figure;
-subplot(2,1,1);
-plot(t, demodAudioMultiplexReverse);
+subplot(3,2,1);
+plot(t, demodAudioMultiplexReverse1, 'b', f, abs(DemodAudioMultiplexReverse1), 'r');
 xlabel('Time (s)');
 ylabel('Amplitude');
-title('Demodulated multiplexed audio signal with reversed distortion (Time Domain)');
-subplot(2,1,2);
-plot(f, abs(DemodAudioMultiplexReverse), 'r');
-xlabel('Frequency [Hz]');
+title('1st Demodulated multiplexed audio signal with reversed distortion (Time Domain and Frequency Domain)');
+
+subplot(3,2,2);
+plot(t, demodAudioMultiplexReverse2, 'b', f, abs(DemodAudioMultiplexReverse2), 'r');
+xlabel('Time (s)');
 ylabel('Amplitude');
-title('Demodulated multiplexed audio signal with reversed distortion (Frequency Domain)');
+title('2nd');
+
+subplot(3,2,3);
+plot(t, demodAudioMultiplexReverse3, 'b', f, abs(DemodAudioMultiplexReverse3), 'r');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('3rd');
+
+subplot(3,2,4);
+plot(t, demodAudioMultiplexReverse4, 'b', f, abs(DemodAudioMultiplexReverse4), 'r');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('4th');
+
+subplot(3,2,5);
+plot(t, demodAudioMultiplexReverse5, 'b', f, abs(DemodAudioMultiplexReverse5), 'r');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('5th');
 
 %% 1.5 Fully de-noising audio
-
 
 %% helper functions
 % function definitions in matlab either need to be in their own file,
