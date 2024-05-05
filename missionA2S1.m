@@ -251,38 +251,155 @@ DemodAudioMultiplexReverse5 = ft(demodAudioMultiplexReverse5, fs);
 %% 1.4 Plots
 
 % plot in time and frequency domains
+
+% meanValue1 = mean(demodAudioMultiplexReverse1);
+% demodAudioMultiplexReverse1 = demodAudioMultiplexReverse1 - meanValue1;
 figure;
-subplot(3,2,1);
-plot(t, demodAudioMultiplexReverse1, 'b', f, abs(DemodAudioMultiplexReverse1), 'r');
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse1, 'b')
 xlabel('Time (s)');
 ylabel('Amplitude');
-title('1st Demodulated multiplexed audio signal with reversed distortion (Time Domain and Frequency Domain)');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse1), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
 
-subplot(3,2,2);
-plot(t, demodAudioMultiplexReverse2, 'b', f, abs(DemodAudioMultiplexReverse2), 'r');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('2nd');
 
-subplot(3,2,3);
-plot(t, demodAudioMultiplexReverse3, 'b', f, abs(DemodAudioMultiplexReverse3), 'r');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('3rd');
+% fpass = 2e3;
+% testfilter = lowpass(demodAudioMultiplexReverse1, fpass, fs);
+% meanValue1 = mean(testfilter);
+% testfilter = testfilter - meanValue1;
+% figure;
+% plot(t, testfilter);
+% TestFilter = ft(testfilter, fs);
+% figure;
+% plot(f, abs(TestFilter));
 
-subplot(3,2,4);
-plot(t, demodAudioMultiplexReverse4, 'b', f, abs(DemodAudioMultiplexReverse4), 'r');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('4th');
+% remove DC offset
+meanValue1 = mean(demodAudioMultiplexReverse1);
+demodAudioMultiplexReverse1 = demodAudioMultiplexReverse1 - meanValue1;
 
-subplot(3,2,5);
-plot(t, demodAudioMultiplexReverse5, 'b', f, abs(DemodAudioMultiplexReverse5), 'r');
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse1, 'b')
 xlabel('Time (s)');
 ylabel('Amplitude');
-title('5th');
+title('1st Audio time');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse1), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('1st Audio freq');
+
+meanValue2 = mean(demodAudioMultiplexReverse2);
+demodAudioMultiplexReverse2 = demodAudioMultiplexReverse2 - meanValue2;
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse2, 'b');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('2nd Audio time');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse2), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('2nd Audio freq');
+
+meanValue3 = mean(demodAudioMultiplexReverse3);
+demodAudioMultiplexReverse3 = demodAudioMultiplexReverse3 - meanValue3;
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse3, 'b');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('3rd Audio time');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse3), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('3rd Audio freq');
+
+meanValue4 = mean(demodAudioMultiplexReverse4);
+demodAudioMultiplexReverse4 = demodAudioMultiplexReverse4 - meanValue4;
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse4, 'b');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('4th Audio time');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse4), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('4th Audio freq');
+
+meanValue5 = mean(demodAudioMultiplexReverse5);
+demodAudioMultiplexReverse5 = demodAudioMultiplexReverse5 - meanValue5;
+figure;
+subplot(2,1,1);
+plot(t, demodAudioMultiplexReverse5, 'b');
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('5th Audio time');
+subplot(2,1,2);
+plot(f, abs(DemodAudioMultiplexReverse5), 'r');
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('5th Audio freq');
 
 %% 1.5 Fully de-noising audio
+
+signals = {demodAudioMultiplexReverse1, demodAudioMultiplexReverse2, demodAudioMultiplexReverse3, demodAudioMultiplexReverse4, demodAudioMultiplexReverse5};
+newSignals = {'filteredAudioMultiplexReverse1', 'filteredAudioMultiplexReverse2', 'filteredAudioMultiplexReverse3', 'filteredAudioMultiplexReverse4', 'filteredAudioMultiplexReverse5'};
+filteredSignals = struct();
+fpass = 2e3;
+
+for i = 1:length(signals)
+    lowSignal = lowpass(signals{i}, fpass, fs, 'Steepness', 0.85, 'StopbandAttenuation', 60);
+    filteredSignals.(newSignals{i}) = lowSignal;
+end
+filteredAudioMultiplexReverse1 = filteredSignals.filteredAudioMultiplexReverse1; filteredAudioMultiplexReverse2 = filteredSignals.filteredAudioMultiplexReverse2; filteredAudioMultiplexReverse3 = filteredSignals.filteredAudioMultiplexReverse3;
+filteredAudioMultiplexReverse4 = filteredSignals.filteredAudioMultiplexReverse4; filteredAudioMultiplexReverse5 = filteredSignals.filteredAudioMultiplexReverse5;
+
+%% 1.5 freq check plots
+FilteredAudioMultiplexReverse1 = ft(filteredAudioMultiplexReverse1, fs); FilteredAudioMultiplexReverse2 = ft(filteredAudioMultiplexReverse2, fs); 
+FilteredAudioMultiplexReverse3 = ft(filteredAudioMultiplexReverse3, fs); FilteredAudioMultiplexReverse4 = ft(filteredAudioMultiplexReverse4, fs); 
+FilteredAudioMultiplexReverse5 = ft(filteredAudioMultiplexReverse5, fs); 
+
+figure;
+subplot(3,2,1);
+plot(f, abs(FilteredAudioMultiplexReverse1));
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('First filtered audio in freq domain');
+
+subplot(3,2,2);
+plot(f, abs(FilteredAudioMultiplexReverse2));
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('Second filtered audio in freq domain');
+
+subplot(3,2,3);
+plot(f, abs(FilteredAudioMultiplexReverse3));
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('Third filtered audio in freq domain');
+
+subplot(3,2,4);
+plot(f, abs(FilteredAudioMultiplexReverse4));
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('Fourth filtered audio in freq domain');
+
+subplot(3,2,5);
+plot(f, abs(FilteredAudioMultiplexReverse5));
+xlabel('Frequency [Hz]');
+ylabel('Magnitude');
+title('Fifth filtered audio in freq domain');
+
+
+
+
 
 %% helper functions
 % function definitions in matlab either need to be in their own file,
