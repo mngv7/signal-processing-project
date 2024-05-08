@@ -353,10 +353,12 @@ signals = {demodAudioMultiplexReverse1, demodAudioMultiplexReverse2, demodAudioM
 newSignals = {'filteredAudioMultiplexReverse1', 'filteredAudioMultiplexReverse2', 'filteredAudioMultiplexReverse3', 'filteredAudioMultiplexReverse4', 'filteredAudioMultiplexReverse5'};
 filteredSignals = struct();
 fpass = 2e3;
+bandfpass = [1.8e3 3e3];
 
 for i = 1:length(signals)
-    lowSignal = lowpass(signals{i}, fpass, fs, 'Steepness', 0.85, 'StopbandAttenuation', 60);
-    filteredSignals.(newSignals{i}) = lowSignal;
+    lowSignal = lowpass(signals{i}, fpass, fs, Steepness = 0.9, StopbandAttenuation = 60); % ImpulseResponse = 'iir');
+    bandSignal = bandstop(lowSignal, bandfpass, fs); % to see difference, set Steepness=0.85 and filteredSignals = lowSignal
+    filteredSignals.(newSignals{i}) = bandSignal;
 end
 filteredAudioMultiplexReverse1 = filteredSignals.filteredAudioMultiplexReverse1; filteredAudioMultiplexReverse2 = filteredSignals.filteredAudioMultiplexReverse2; filteredAudioMultiplexReverse3 = filteredSignals.filteredAudioMultiplexReverse3;
 filteredAudioMultiplexReverse4 = filteredSignals.filteredAudioMultiplexReverse4; filteredAudioMultiplexReverse5 = filteredSignals.filteredAudioMultiplexReverse5;
