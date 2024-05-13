@@ -9,17 +9,29 @@ clear all; close all;
 
 %% 2.1
 
-t2 = timevec(0, 20, 10e4);
+t2 = timevec(0, 20, 100000); % Time vector
 
-StepInp = ones(size(t2));
+% Step input
+step_input = ones(size(t2));
 
-StepRes = 2*t2 + 4*exp(-0.5*t2) - 4;
+% Step response
+step_response = 2*t2 + 4*exp(-0.5*t2) - 4;
 
-
-plot(t2, StepRes, 'r', t2, StepInp);
+% Plotting
+figure;
+subplot(2,1,1);
+plot(t2, step_input, 'b', 'LineWidth', 1.5); % Step input
 xlabel('Time (s)');
-ylabel('Amplitude');
-title('Step Input against Step Response');
+ylabel('Voltage (V)');
+title('Step Input');
+grid on;
+
+subplot(2,1,2);
+plot(t2, step_response, 'r', 'LineWidth', 1.5); % Step response
+xlabel('Time (s)');
+ylabel('Radians (rad)');
+title('Step Response');
+grid on;
 
 %% helper functions
 % function definitions in matlab either need to be in their own file,
