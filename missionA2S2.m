@@ -33,6 +33,27 @@ ylabel('Radians (rad)');
 title('Step Response');
 grid on;
 
+%% 2.2
+
+% Define transfer function G1
+numerator_G1 = [1];
+denominator_G1 = [1, 0.5, 0];
+G1 = tf(numerator_G1, denominator_G1);
+
+% Calculate G2 = G1 / (1 + G1)
+G2 = feedback(G1, 1);
+
+% Use lsim to simulate the response of the feedback system
+[y1, t2, x1] = lsim(G2, step_input, t2);
+
+% Plot the step response
+figure;
+plot(t2, y1);
+title('Step Response of Feedback System');
+xlabel('Time (s)');
+ylabel('Output');
+grid on;
+
 %% helper functions
 % function definitions in matlab either need to be in their own file,
 % or can be in at the bottom of a script.
