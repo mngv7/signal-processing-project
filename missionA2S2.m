@@ -32,19 +32,25 @@ xlabel('Time (s)');
 ylabel('Radians (rad)');
 title('Step Response');
 grid on;
+%% 2.3
+
+% Underdamped
+% Natural frequency: 1
+% Damping ratio: 0.25
+
+% Peak time: 3.24s
+% Settling time: 16s
+% Overshoot %: 44.4%
 
 %% 2.2
 
 % Define transfer function G1
 numerator_G1 = [1];
-denominator_G1 = [1, 0.5, 0];
+denominator_G1 = [1, 0.5, 1];
 G1 = tf(numerator_G1, denominator_G1);
 
-% Calculate G2 = G1 / (1 + G1)
-G2 = feedback(G1, 1);
-
 % Use lsim to simulate the response of the feedback system
-[y1, t2, x1] = lsim(G2, step_input, t2);
+[y1, t2, x1] = lsim(G1, step_input, t2);
 
 % Plot the step response
 figure;
@@ -53,6 +59,37 @@ title('Step Response of Feedback System');
 xlabel('Time (s)');
 ylabel('Output');
 grid on;
+
+%% 2.4
+
+% Ggs = {0.1, 0.2, 0.5, 1, 2};
+% Hgs = {0.1, 0.2, 0.5, 1, 2};
+
+% For i = 0; i < 5; i++
+    % Ggs = 1;
+    % numerator = Ggs;
+    % denominator = [1, 0.5, Hgs(i)];
+    % G2 = tf(numerator, denominator);
+
+    % [y, t, x] = lsim(G2, step_input, t2);
+
+    % figure; hold on;
+    % plot(t, y);
+    % ...other plot parametrs
+%
+
+% For i = 0; i < 5; i++
+    % Hgs = 1;
+    % numerator = Ggs(i);
+    % denominator = [1, 0.5, Hgs];
+    % G2 = tf(numerator, denominator);
+
+    % [y, t, x] = lsim(G2, step_input, t2);
+
+    % figure; hold on;
+    % plot(t, y);
+    % ...other plot parametrs
+%
 
 %% helper functions
 % function definitions in matlab either need to be in their own file,
