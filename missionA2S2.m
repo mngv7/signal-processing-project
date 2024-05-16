@@ -41,7 +41,7 @@ denominator_G1 = [1, 0.5, 1];
 G1 = tf(numerator_G1, denominator_G1);
 
 % Use lsim to simulate the response of the feedback system
-[y1, t2, x1] = lsim(G1, step_input, t2);
+y1 = lsim(G1, step_input, t2);
 
 % Plot the step response
 figure;
@@ -64,35 +64,43 @@ grid on;
 % Overshoot %: 44.4%
 
 %% 2.4
+    
+% Define the values for Ggs and Hgs
+Ggs = [0.1, 0.2, 0.5, 1, 2];
+Hgs = [0.1, 0.2, 0.5, 1, 2];
 
-% Ggs = {0.1, 0.2, 0.5, 1, 2};
-% Hgs = {0.1, 0.2, 0.5, 1, 2};
+% Loop over the values in Ggs while keeping Hgs constant
+for i = 1:5
+    Ggs_i = 1;
+    num = Ggs_i;
+    den = [1, 0.5, Hgs(i)];
+    G2 = tf(num, den);
+    
+    y = lsim(G2, step_input, t2);
+    
+    subplot(2, 5, i); % Create a subplot grid (2 rows, 5 columns)
+    plot(t2, y);
+    title(['Step Response Kfb = ', num2str(Hgs(i))]);
+    xlabel('Time (s)');
+    ylabel('Output');
+end
 
-% For i = 0; i < 5; i++
-    % Ggs = 1;
-    % numerator = Ggs;
-    % denominator = [1, 0.5, Hgs(i)];
-    % G2 = tf(numerator, denominator);
+% Loop over the values in Hgs while keeping Ggs constant
+for i = 1:5
+    Hgs_i = 1;
+    num2 = Hgs(i);
+    den2 = [1, 0.5, Ggs(i)];
+    G2 = tf(num2, den2);
+    
+    y = lsim(G2, step_input, t2);
 
-    % [y, t, x] = lsim(G2, step_input, t2);
-
-    % figure; hold on;
-    % plot(t, y);
-    % ...other plot parametrs
-%
-
-% For i = 0; i < 5; i++
-    % Hgs = 1;
-    % numerator = Ggs(i);
-    % denominator = [1, 0.5, Hgs];
-    % G2 = tf(numerator, denominator);
-
-    % [y, t, x] = lsim(G2, step_input, t2);
-
-    % figure; hold on;
-    % plot(t, y);
-    % ...other plot parametrs
-%
+    subplot(2, 5, 5+i); % Create a subplot grid (2 rows, 5 columns)
+    plot(t2, y);
+    title(['Step Response Kfwd = ', num2str(Ggs(i))]);
+    xlabel('Time (s)');
+    ylabel('Output');
+end
+sgtitle('System Responses for Different Ggs and Hgs Values');
 
 %% 2.5
 
@@ -105,6 +113,26 @@ grid on;
 % - The camera shouldn't rotate to quickly (peak time shouldn't be too
 % fast, aim for 13 seconds).
 
+% Define transfer function G1
+Fnum = [1];
+Fden = [1, 0.5, 0.158];
+cameraTF = tf(Fnum, Fden);
+
+% Use lsim to simulate the response of the feedback system
+y2 = lsim(cameraTF, step_input, t2);
+
+% Plot the step response
+figure;
+plot(t2, y2);
+title('Step Response of Feedback System');
+xlabel('Time (s)');
+ylabel('Output');
+grid on;
+
+%% 2.6
+startVoltage = 30/Fden; %Not sure yet
+endVoltage = 210/Fden; %Not sure yet either
+[startIm, finalIm] = cameraPan(startVoltage, endVoltage, cameraTF);
 %% helper functions
 % function definitions in matlab either need to be in their own file,
 % or can be in at the bottom of a script.
