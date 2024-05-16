@@ -32,15 +32,6 @@ xlabel('Time (s)');
 ylabel('Radians (rad)');
 title('Step Response');
 grid on;
-%% 2.3
-
-% Underdamped
-% Natural frequency: 1
-% Damping ratio: 0.25
-
-% Peak time: 3.24s
-% Settling time: 16s
-% Overshoot %: 44.4%
 
 %% 2.2
 
@@ -59,6 +50,18 @@ title('Step Response of Feedback System');
 xlabel('Time (s)');
 ylabel('Output');
 grid on;
+
+% This isn't good enough because it doesn't rotate all the way.
+
+%% 2.3
+
+% Underdamped
+% Natural frequency: 1
+% Damping ratio: 0.25
+
+% Peak time: 3.24s
+% Settling time: 16s
+% Overshoot %: 44.4%
 
 %% 2.4
 
@@ -90,6 +93,17 @@ grid on;
     % plot(t, y);
     % ...other plot parametrs
 %
+
+%% 2.5
+
+% Get the system parameters (2.3) of all the plots created in 2.4, using
+% this determine which gain values (Hg(s) and Gg(s)) is suitable. Requires
+% of the system:
+
+% - Output must accurately travel between 0 to 2pi rads (so preferrably no
+% oscillation).
+% - The camera shouldn't rotate to quickly (peak time shouldn't be too
+% fast, aim for 13 seconds).
 
 %% helper functions
 % function definitions in matlab either need to be in their own file,
