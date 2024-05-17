@@ -56,8 +56,8 @@ grid on;
 %% 2.3
 
 % Underdamped
-% Natural frequency: 1
-% Damping ratio: 0.25
+% Natural frequency (omega-n): 1
+% Damping ratio (zeta): 0.25
 
 % Peak time: 3.24s
 % Settling time: 16s
@@ -114,8 +114,8 @@ sgtitle('System Responses for Different Ggs and Hgs Values');
 % fast, aim for 13 seconds).
 
 % Define transfer function G1
-Fnum = [1];
-Fden = [1, 0.5, 0.158];
+Fnum = [0.7596]; % 0.718
+Fden = [1, 0.5, 0.1208]; %0.115
 cameraTF = tf(Fnum, Fden);
 
 % Use lsim to simulate the response of the feedback system
@@ -126,12 +126,16 @@ figure;
 plot(t2, y2);
 title('Step Response of Feedback System');
 xlabel('Time (s)');
-ylabel('Output');
+ylabel('Output (rad)');
 grid on;
 
 %% 2.6
-startVoltage = 30/Fden; %Not sure yet
-endVoltage = 210/Fden; %Not sure yet either
+% Output = 30 deg = pi/6
+% Output = 210 deg = 7pi/6
+% Input * 2pi = Output ~ Input = Output / 2pi
+
+startVoltage = 1/12;
+endVoltage = 7/12; 
 [startIm, finalIm] = cameraPan(startVoltage, endVoltage, cameraTF);
 %% helper functions
 % function definitions in matlab either need to be in their own file,
