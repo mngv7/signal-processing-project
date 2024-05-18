@@ -114,8 +114,8 @@ sgtitle('System Responses for Different Ggs and Hgs Values');
 % fast, aim for 13 seconds).
 
 % Define transfer function G1
-Fnum = [0.7596]; % 0.718
-Fden = [1, 0.5, 0.1208]; %0.115
+Fnum = [0.7596]; % 2pi * Wn^2
+Fden = [1, 0.5, 0.1208]; % G(s) General second order transfer function denominator
 cameraTF = tf(Fnum, Fden);
 
 % Use lsim to simulate the response of the feedback system
