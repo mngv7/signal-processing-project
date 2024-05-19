@@ -10,40 +10,226 @@ load DataA2 imagesReceived;
 
 % Begin writing your MATLAB solution below this line.
 %% Question 3.1
-im1D = imagesReceived(1,:);
+firstImage = imagesReceived(1,:);
+
+numRows = 480;
+numCols = 640;
 
 % Converting a received pixel stream to an image matrix
-im2D = reshape(im1D, 480, 640) ;
+reshapedFirstImage = reshape(firstImage, numRows, numCols);
 
 % Displaying an image in a figure
 figure;
-imshow (im2D) ;
+imshow(reshapedFirstImage);
 
 % Saving an image matrix as an image file 
-imwrite (im2D , 'InitialImage.png') ;
+imwrite(reshapedFirstImage, '1stImage.png');
+
 
 %% Question 3.2
-samples = length(im1D);
-f = 1000;
-T = 1/1000;
-% Creating the time vector
-t = timevec(0, T * samples, samples); 
-% Creating the Frequency vector
-fs = freqvec(f, samples); 
 
+% Define the parameters
+pixelRate = 1000; % pixels per second
+numPixels = numel(firstImage); % returns the number of elements in an array (samples).
+duration = numPixels / pixelRate; % total duration of the signal
+
+% Construct the time vector
+t = timevec(0, duration, numPixels);
+
+% Construct the frequency vector
+Fs = pixelRate; % Sampling frequency
+f = freqvec(Fs, numPixels);
+
+% Visualize the received signal in time domain
 figure;
-plot(t, im1D);
+plot(t, firstImage);
 xlim([0,307]);
 ylim([-7,7]);
 xlabel('Time [s]');
-ylabel('Magnitdue');
+ylabel('Amplitude');
 title('Received image signal in Time Domain');
+
+% Visualize the received signal in frequency domain
+FirstImage = fftshift(fft(firstImage));
+figure;
+plot(f, abs(FirstImage));
+title('Received Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+%% Question 3.3
+
+% Define transfer function Filter 1
+Pnum1 = [1]; 
+Pden1 = [5.64e-5, 0.0167, 1]; 
+Passive1tf = tf(Pnum1, Pden1);
+
+% Define transfer function Filter 2
+Pnum2 = [1.2e-3]; 
+Pden2 = [5.64e-5, 5.9e-3, 1]; 
+Passive2tf = tf(Pnum2, Pden2);
+
+% Define transfer function Filter 1
+Anum1 = [1.22e3]; 
+Aden1 = [1, 2.44e3,1.44e6];
+Active1tf = tf(Anum1, Aden1);
+
+% Define transfer function Filter 2
+Anum2 = [1]; 
+Aden2 = [1, 2.44e3, 1.49e6]; 
+Active2tf = tf(Anum2, Aden2);
+
+%% LTI view
+ltiview(Passive1tf);
+ltiview(Passive2tf);
+ltiview(Active1tf);
+ltiview(Active2tf);
+
+%% Use lsim to simulate the response of the feedback system
+% P1 = lsim(Passive1tf, firstImage, t);
+% P2 = lsim(Passive2tf, firstImage, t);
+% A1 = lsim(Active1tf, firstImage, t);
+% A2 = lsim(Active2tf, firstImage, t);
+
+%% All images can only use passive 1 filter. Other filters just show black.
+%% 3.4
+% First image
+
+% Apply the filter to the received signal
+firstImage_filteredP1 = lsim(Passive1tf, firstImage, t);
+
+% Reshape the filtered 1D signal back into a 2D image matrix
+reshapedFiltFirstImage = reshape(firstImage_filteredP1, numRows, numCols);
+
+% Display the clean image
+figure;
+imshow(reshapedFiltFirstImage);
+title('Filtered Landing Site Image 1');
+
+% Visualize the clean signal in time domain
+figure;
+plot(t, firstImage_filteredP1);
+xlim([0,307]);
+title('Filtered Signal in Time Domain');
+xlabel('Time (s)');
+ylabel('Pixel Intensity');
+
+% Visualize the clean signal in frequency domain
+FirstImage_filteredP1 = fftshift(fft(firstImage_filteredP1));
+figure;
+plot(f, abs(FirstImage_filteredP1));
+title('Filtered Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+%% 3.5
+% Second image
+
+secondImage = imagesReceived(2,:);
+reshapedSecondImage = reshape(secondImage, numRows, numCols);
+imwrite(reshapedSecondImage, '2ndImage.png');
+
+figure;
+imshow(reshapedSecondImage);
+
+% Apply the filter to the received signal
+secondImage_filteredP1 = lsim(Passive1tf, secondImage, t);
+
+% Reshape the filtered 1D signal back into a 2D image matrix
+reshapedFiltSecondImage = reshape(secondImage_filteredP1, numRows, numCols);
+
+% Display the clean image
+figure;
+imshow(reshapedFiltSecondImage);
+title('Filtered Landing Site Image 2');
+
+% Visualize the clean signal in time domain
+figure;
+plot(t, secondImage_filteredP1);
+xlim([0,307]);
+title('Filtered Signal in Time Domain');
+xlabel('Time (s)');
+ylabel('Pixel Intensity');
+
+% Visualize the clean signal in frequency domain
+SecondImage_filteredP1 = fftshift(fft(secondImage_filteredP1));
+figure;
+plot(f, abs(SecondImage_filteredP1));
+title('Filtered Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
 %%
-% IM1D = ft(im1D, fs);
-% plot(fs, abs(IM1D));
-% xlabel('Frequency [Hz]');
-% ylabel('Magnitude');
-% title('Received image signal in Frequency Domain');
+% Third image
+
+thirdImage = imagesReceived(3,:);
+reshapedThirdImage = reshape(thirdImage, numRows, numCols);
+imwrite(reshapedThirdImage, '3rdImage.png');
+
+figure;
+imshow(reshapedThirdImage);
+
+% Apply the filter to the received signal
+thirdImage_filteredP1 = lsim(Passive1tf, thirdImage, t);
+
+% Reshape the filtered 1D signal back into a 2D image matrix
+reshapedFiltThirdImage = reshape(thirdImage_filteredP1, numRows, numCols);
+
+% Display the clean image
+figure;
+imshow(reshapedFiltThirdImage);
+title('Filtered Landing Site Image 3');
+
+% Visualize the clean signal in time domain
+figure;
+plot(t, thirdImage_filteredP1);
+xlim([0,307]);
+title('Filtered Signal in Time Domain');
+xlabel('Time (s)');
+ylabel('Pixel Intensity');
+
+% Visualize the clean signal in frequency domain
+ThirdImage_filteredP1 = fftshift(fft(thirdImage_filteredP1));
+figure;
+plot(f, abs(ThirdImage_filteredP1));
+title('Filtered Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+%%
+% Fourth image
+
+fourthImage = imagesReceived(4,:);
+reshapedFourthImage = reshape(fourthImage, numRows, numCols);
+imwrite(reshapedFourthImage, '4thImage.png');
+
+figure;
+imshow(reshapedFourthImage);
+
+% Apply the filter to the received signal
+fourthImage_filteredP1 = lsim(Passive1tf, fourthImage, t);
+
+% Reshape the filtered 1D signal back into a 2D image matrix
+reshapedFiltFourthImage = reshape(fourthImage_filteredP1, numRows, numCols);
+
+% Display the clean image
+figure;
+imshow(reshapedFiltFourthImage);
+title('Filtered Landing Site Image 4');
+
+% Visualize the clean signal in time domain
+figure;
+plot(t, fourthImage_filteredP1);
+xlim([0,307]);
+title('Filtered Signal in Time Domain');
+xlabel('Time (s)');
+ylabel('Pixel Intensity');
+
+% Visualize the clean signal in frequency domain
+FourthImage_filteredP1 = fftshift(fft(fourthImage_filteredP1));
+figure;
+plot(f, abs(FourthImage_filteredP1));
+title('Filtered Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
 %% helper functions
 % function definitions in matlab either need to be in their own file,
 % or can be in at the bottom of a script.
