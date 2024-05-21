@@ -33,6 +33,35 @@ ylabel('Radians (rad)');
 title('Step Response');
 grid on;
 
+%% 2.1.1 Poles
+
+poles = [-0.5, 0];
+
+figure;
+
+plot(real(poles), imag(poles), 'kx', 'MarkerSize', 10, 'LineWidth', 2);
+hold on;
+
+grid on;
+
+xlim([-1, 1]);
+ylim([-1, 1]);
+
+line([-1, 1], [0, 0], 'Color', 'k', 'LineStyle', '-'); % Real axis
+line([0, 0], [-1, 1], 'Color', 'k', 'LineStyle', '-'); % Imaginary axis
+
+xlabel('Real Part');
+ylabel('Imaginary Part');
+
+title('Pole-Zero Plot');
+
+text(real(poles(1)), imag(poles(1)), '  -0.5', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');
+text(real(poles(2)), imag(poles(2)), '  0', 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');
+
+legend('Poles');
+
+hold off;
+
 %% 2.2
 
 % Define transfer function G1
