@@ -179,7 +179,6 @@ impulse = zeros(1, length(audioMultiplexNoisy));
 impulse(1) = 1/(1/fs);
 h_t = channel(sid, impulse, fs);
 H_f = ft(h_t, fs);
-
 figure;
 plot(f, abs(H_f), 'r', f, abs(AudioMultiplexNoisy), 'b');
 legend('H(f)', 'AudioMultiplexNoisy')
@@ -193,6 +192,14 @@ grid on;
 % Input(f) = Output(f) / H(f)
 AudioMultiplexReverse = AudioMultiplexNoisy ./ H_f;
 audioMultiplexReverse = ift(AudioMultiplexReverse, fs);
+
+figure;
+plot(f, abs(AudioMultiplexReverse));
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Frequency spectrum of Audio Multiplex Signal with reversed distortion', 'FontSize',30);
+ax = gca;
+ax.FontSize = 20;
 
 % Demodulate signal again
 carrierFrequency1 = 8050;
@@ -358,7 +365,7 @@ bandfpass = [1.8e3 3e3];
 for i = 1:length(signals)
     lowSignal = lowpass(signals{i}, fpass, fs, Steepness = 0.9, StopbandAttenuation = 60); % ImpulseResponse = 'iir');
     bandSignal = bandstop(lowSignal, bandfpass, fs); % to see difference, set Steepness=0.85 and filteredSignals = lowSignal
-    filteredSignals.(newSignals{i}) = lowSignal;
+    filteredSignals.(newSignals{i}) = bandSignal;
 end
 filteredAudioMultiplexReverse1 = filteredSignals.filteredAudioMultiplexReverse1; filteredAudioMultiplexReverse2 = filteredSignals.filteredAudioMultiplexReverse2; filteredAudioMultiplexReverse3 = filteredSignals.filteredAudioMultiplexReverse3;
 filteredAudioMultiplexReverse4 = filteredSignals.filteredAudioMultiplexReverse4; filteredAudioMultiplexReverse5 = filteredSignals.filteredAudioMultiplexReverse5;
