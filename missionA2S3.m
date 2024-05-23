@@ -70,8 +70,8 @@ Pden2 = [5.64e-5, 5.9e-3, 1];
 Passive2tf = tf(Pnum2, Pden2);
 
 % Define transfer function Filter 1
-Anum1 = [1.22e3]; 
-Aden1 = [1, 2.44e3,1.44e6];
+Anum1 = [1.49e6]; 
+Aden1 = [1, 2.44e3,1.49e6];
 Active1tf = tf(Anum1, Aden1);
 
 % Define transfer function Filter 2
@@ -95,34 +95,34 @@ ltiview(Active2tf);
 % %% 3.4
 % % First image
 % 
-% % Apply the filter to the received signal
-% firstImage_filteredP1 = lsim(Passive1tf, firstImage, t);
-% 
-% % Reshape the filtered 1D signal back into a 2D image matrix
-% reshapedFiltFirstImage = reshape(firstImage_filteredP1, numRows, numCols);
-% 
-% % Display the clean image
-% figure;
-% imshow(reshapedFiltFirstImage);
-% title('Filtered Landing Site Image 1');
-% 
-% % Visualize the clean signal in time domain
-% figure;
-% plot(t, firstImage_filteredP1);
-% xlim([0,307]);
-% title('Filtered Signal in Time Domain');
-% xlabel('Time (s)');
-% ylabel('Pixel Intensity');
-% 
-% % Visualize the clean signal in frequency domain
-% FirstImage_filteredP1 = fftshift(fft(firstImage_filteredP1));
-% figure;
-% plot(f, abs(FirstImage_filteredP1));
-% title('Filtered Signal in Frequency Domain');
-% xlabel('Frequency (Hz)');
-% ylabel('Magnitude');
-% 
-% %% 3.5
+% Apply the filter to the received signal
+ firstImage_filtered = lsim(Active1tf, firstImage, t);
+
+% Reshape the filtered 1D signal back into a 2D image matrix
+ reshapedFiltFirstImage = reshape(firstImage_filtered, numRows, numCols);
+
+% Display the clean image
+figure;
+ imshow(reshapedFiltFirstImage);
+ title('Filtered Landing Site Image');
+
+% Visualize the clean signal in time domain
+figure;
+plot(t, firstImage_filtered);
+xlim([0,307]);
+title('Filtered Signal in Time Domain');
+xlabel('Time (s)');
+ylabel('Pixel Intensity');
+
+% Visualize the clean signal in frequency domain
+FirstImage_filtered = fftshift(fft(firstImage_filtered));
+figure;
+plot(f, abs(FirstImage_filtered));
+title('Filtered Signal in Frequency Domain');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+%% 3.5
 % % Second image
 % 
 % secondImage = imagesReceived(2,:);
@@ -355,5 +355,4 @@ function inversefourierTransform = ift(freq, n)
 
     inversefourierTransform = ifft(ifftshift(freq)) * n;
 end
-
 
