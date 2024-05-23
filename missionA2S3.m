@@ -50,7 +50,7 @@ ylabel('Amplitude');
 title('Received image signal in Time Domain');
 
 % Visualize the received signal in frequency domain
-FirstImage = fftshift(fft(firstImage));
+FirstImage = ft(firstImage);
 figure;
 plot(f, abs(FirstImage));
 title('Received Signal in Frequency Domain');
@@ -60,13 +60,13 @@ ylabel('Magnitude');
 %% Question 3.3
 
 % Define transfer function Filter 1
-Pnum1 = [1]; 
-Pden1 = [5.64e-5, 0.0167, 1]; 
+Pnum1 = [1.2e-3]; 
+Pden1 = [5.64e-5, 5.9e-3, 1]; 
 Passive1tf = tf(Pnum1, Pden1);
 
 % Define transfer function Filter 2
-Pnum2 = [1.2e-3]; 
-Pden2 = [5.64e-5, 5.9e-3, 1]; 
+Pnum2 = [1]; 
+Pden2 = [5.64e-5, 16.7e-3, 1]; 
 Passive2tf = tf(Pnum2, Pden2);
 
 % Define transfer function Filter 1
@@ -79,11 +79,11 @@ Anum2 = [1];
 Aden2 = [1, 2.44e3, 1.49e6]; 
 Active2tf = tf(Anum2, Aden2);
 
-%% LTI view
-ltiview(Passive1tf);
-ltiview(Passive2tf);
-ltiview(Active1tf);
-ltiview(Active2tf);
+% %% LTI view
+% ltiview(Passive1tf);
+% ltiview(Passive2tf);
+% ltiview(Active1tf);
+% ltiview(Active2tf);
 
 %% Use lsim to simulate the response of the feedback system
 % P1 = lsim(Passive1tf, firstImage, t);
@@ -91,10 +91,10 @@ ltiview(Active2tf);
 % A1 = lsim(Active1tf, firstImage, t);
 % A2 = lsim(Active2tf, firstImage, t);
 
-%% All images can only use passive 1 filter. Other filters just show black.
-% %% 3.4
-% % First image
-% 
+%% All images are best cleaned with Active filter 1.
+%% 3.4
+% First image
+
 % Apply the filter to the received signal
  firstImage_filtered = lsim(Active1tf, firstImage, t);
 
@@ -110,19 +110,20 @@ figure;
 figure;
 plot(t, firstImage_filtered);
 xlim([0,307]);
+ylim([-2,2]);
 title('Filtered Signal in Time Domain');
 xlabel('Time (s)');
 ylabel('Pixel Intensity');
 
 % Visualize the clean signal in frequency domain
-FirstImage_filtered = fftshift(fft(firstImage_filtered));
+FirstImage_filtered = ft(firstImage_filtered);
 figure;
 plot(f, abs(FirstImage_filtered));
 title('Filtered Signal in Frequency Domain');
 xlabel('Frequency (Hz)');
 ylabel('Magnitude');
 
-%% 3.5
+%% Individual Filtering
 % % Second image
 % 
 % secondImage = imagesReceived(2,:);
@@ -133,10 +134,10 @@ ylabel('Magnitude');
 % imshow(reshapedSecondImage);
 % 
 % % Apply the filter to the received signal
-% secondImage_filteredP1 = lsim(Passive1tf, secondImage, t);
+% secondImage_filtered = lsim(Passive2tf, secondImage, t);
 % 
 % % Reshape the filtered 1D signal back into a 2D image matrix
-% reshapedFiltSecondImage = reshape(secondImage_filteredP1, numRows, numCols);
+% reshapedFiltSecondImage = reshape(secondImage_filtered, numRows, numCols);
 % 
 % % Display the clean image
 % figure;
@@ -145,16 +146,16 @@ ylabel('Magnitude');
 % 
 % % Visualize the clean signal in time domain
 % figure;
-% plot(t, secondImage_filteredP1);
+% plot(t, secondImage_filtered);
 % xlim([0,307]);
 % title('Filtered Signal in Time Domain');
 % xlabel('Time (s)');
 % ylabel('Pixel Intensity');
 % 
 % % Visualize the clean signal in frequency domain
-% SecondImage_filteredP1 = fftshift(fft(secondImage_filteredP1));
+% SecondImage_filtered = fftshift(fft(secondImage_filtered));
 % figure;
-% plot(f, abs(SecondImage_filteredP1));
+% plot(f, abs(SecondImage_filtered));
 % title('Filtered Signal in Frequency Domain');
 % xlabel('Frequency (Hz)');
 % ylabel('Magnitude');
@@ -169,7 +170,7 @@ ylabel('Magnitude');
 % imshow(reshapedThirdImage);
 % 
 % % Apply the filter to the received signal
-% thirdImage_filteredP1 = lsim(Passive1tf, thirdImage, t);
+% thirdImage_filteredP1 = lsim(Active1tf, thirdImage, t);
 % 
 % % Reshape the filtered 1D signal back into a 2D image matrix
 % reshapedFiltThirdImage = reshape(thirdImage_filteredP1, numRows, numCols);
@@ -205,7 +206,7 @@ ylabel('Magnitude');
 % imshow(reshapedFourthImage);
 % 
 % % Apply the filter to the received signal
-% fourthImage_filteredP1 = lsim(Passive1tf, fourthImage, t);
+% fourthImage_filteredP1 = lsim(Active2tf, fourthImage, t);
 % 
 % % Reshape the filtered 1D signal back into a 2D image matrix
 % reshapedFiltFourthImage = reshape(fourthImage_filteredP1, numRows, numCols);
@@ -231,8 +232,8 @@ ylabel('Magnitude');
 % xlabel('Frequency (Hz)');
 % ylabel('Magnitude');
 
-
-for i = 1:4
+%% 3.5
+for i = 2:4
     image = imagesReceived(i, :);
     reshapedImage = reshape(image, numRows, numCols);
     imgString = [num2str(i) 'image.png'];
@@ -241,9 +242,9 @@ for i = 1:4
     figure;
     imshow(reshapedImage);
 
-    image_filteredP1 = lsim(Passive1tf, image, t);
+    image_filtered = lsim(Active1tf, image, t);
 
-    reshapedFiltImage = reshape(image_filteredP1, numRows, numCols);
+    reshapedFiltImage = reshape(image_filtered, numRows, numCols);
 
     figure;
     imshow(reshapedFiltImage);
@@ -251,13 +252,14 @@ for i = 1:4
     title(imgTitleString);
 
     figure;
-    plot(t, image_filteredP1);
+    plot(t, image_filtered);
     xlim([0,307]);
+    ylim([-2,2]);
     title('Filtered Signal in Time Domain');
     xlabel('Time (s)');
     ylabel('Pixel Intensity');
 
-    Image_filteredP1 = fftshift(fft(image_filteredP1));
+    Image_filteredP1 = ft(image_filtered);
     figure;
     plot(f, abs(Image_filteredP1));
     title('Filtered Signal in Frequency Domain');
@@ -336,23 +338,12 @@ function f=freqvec(fs, n)
     end
 end
 
-function fourierTransform = ft(freq, n)
+function fourierTransform = ft(freq)
 % Applies complex Fourier transform with the assigned sampling frequency
 %
 %   Args:
 %   freq = frequency/signal input
 %   n = sample frequency in Hz
 
-    fourierTransform = fftshift(fft(freq)) / n;
+    fourierTransform = fftshift(fft(freq));
 end
-
-function inversefourierTransform = ift(freq, n)
-% Applies inverse Fourier transform with the assigned sampling frequency
-%
-%   Args:
-%   freq = frequency/signal input
-%   n = sample frequency in Hz
-
-    inversefourierTransform = ifft(ifftshift(freq)) * n;
-end
-
