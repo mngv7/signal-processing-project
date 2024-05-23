@@ -98,38 +98,53 @@ grid on;
 Ggs = [0.1, 0.2, 0.5, 1, 2];
 Hgs = [0.1, 0.2, 0.5, 1, 2];
 
+% Define step input and time vector t2
+step_input = ones(100, 1); % Assuming a unit step input
+t2 = linspace(0, 10, 100); % Assuming a time vector from 0 to 10 seconds
+
+% Create a new figure
+figure;
+
 % Loop over the values in Ggs while keeping Hgs constant
+hold on; % Keep all plots on the same graph
 for i = 1:5
     Ggs_i = 1;
     num = Ggs_i;
     den = [1, 0.5, Hgs(i)];
     G2 = tf(num, den);
-    
     y = lsim(G2, step_input, t2);
-    
-    subplot(2, 5, i); % Create a subplot grid (2 rows, 5 columns)
-    plot(t2, y);
-    title(['Step Response Kfb = ', num2str(Hgs(i))]);
-    xlabel('Time (s)');
-    ylabel('Output');
+    plot(t2, y, 'DisplayName', ['Kfb = ', num2str(Hgs(i))]);
 end
 
+% Add labels, title, and legend
+xlabel('Time (s)');
+ylabel('Output');
+title('Step Response for Different Kfb Values');
+legend;
+grid on; % Turn on the grid
+hold off;
+
+% Create a new figure for the second set of plots
+figure;
+
 % Loop over the values in Hgs while keeping Ggs constant
+hold on; % Keep all plots on the same graph
 for i = 1:5
     Hgs_i = 1;
     num2 = Hgs(i);
     den2 = [1, 0.5, Ggs(i)];
     G2 = tf(num2, den2);
-    
     y = lsim(G2, step_input, t2);
-
-    subplot(2, 5, 5+i); % Create a subplot grid (2 rows, 5 columns)
-    plot(t2, y);
-    title(['Step Response Kfwd = ', num2str(Ggs(i))]);
-    xlabel('Time (s)');
-    ylabel('Output');
+    plot(t2, y, 'DisplayName', ['Kfwd = ', num2str(Ggs(i))]);
 end
-sgtitle('System Responses for Different Ggs and Hgs Values');
+
+% Add labels, title, and legend
+xlabel('Time (s)');
+ylabel('Output');
+title('Step Response for Different Kfwd Values');
+legend;
+grid on; % Turn on the grid
+hold off;
 
 %% 2.5
 
