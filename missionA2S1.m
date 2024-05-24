@@ -38,7 +38,7 @@ subplot(2, 1, 2);
 plot(f, abs(AudioMultiplexNoisy), 'k');
 title('Multiplexed Audio Signal (Frequency Domain)');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 
 %% 1.2 Demodulate the signals in the frequency domain, listen, and plot.
 
@@ -72,7 +72,7 @@ title('First Signal Demodulated (Time Domain)');
 subplot(2, 1, 2);
 plot(f, abs(FirstSignalDemodulated), 'k');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 title('First Signal Demodulated (Frequency Domain)');
 
 %% Second signal centred at 24.33 kHz
@@ -96,7 +96,7 @@ title('Second Signal Demodulated (Time Domain)');
 subplot(2, 1, 2);
 plot(f, abs(SecondSignalDemodulated), 'k');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 title('Second Signal Demodulated (Frequency Domain)');
 
 %% Third signal centred at 40.27 kHz
@@ -120,7 +120,7 @@ title('Third Signal Demodulated (Time Domain)');
 subplot(2, 1, 2);
 plot(f, abs(ThirdSignalDemodulated), 'k');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 title('Third Signal Demodulated (Frequency Domain)');
 
 %% Fourth signal centred at 56.17 kHz
@@ -144,7 +144,7 @@ title('Fourth Signal Demodulated (Time Domain)');
 subplot(2, 1, 2);
 plot(f, abs(FourthSignalDemodulated), 'k');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 title('Fourth Signal Demodulated (Frequency Domain)');
 
 %% Fifth signal centred at 72.29 kHz
@@ -168,7 +168,7 @@ title('Fifth Signal Demodulated (Time Domain)');
 subplot(2, 1, 2);
 plot(f, abs(FifthSignalDemodulated), 'k');
 xlabel('Frequency [Hz]');
-ylabel('Amplitude');
+ylabel('Magnitude');
 title('Fifth Signal Demodulated (Frequency Domain)');
 %% 1.3 Frequency and impulse response of the LTI system
 
@@ -259,100 +259,136 @@ DemodAudioMultiplexReverse5 = ft(demodAudioMultiplexReverse5, fs);
 
 % plot in time and frequency domains
 
-% meanValue1 = mean(demodAudioMultiplexReverse1);
-% demodAudioMultiplexReverse1 = demodAudioMultiplexReverse1 - meanValue1;
-figure;
-subplot(2,1,1);
-plot(t, demodAudioMultiplexReverse1, 'b')
-xlabel('Time (s)');
-ylabel('Amplitude');
-subplot(2,1,2);
-plot(f, abs(DemodAudioMultiplexReverse1), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-
-
-% fpass = 2e3;
-% testfilter = lowpass(demodAudioMultiplexReverse1, fpass, fs);
-% meanValue1 = mean(testfilter);
-% testfilter = testfilter - meanValue1;
-% figure;
-% plot(t, testfilter);
-% TestFilter = ft(testfilter, fs);
-% figure;
-% plot(f, abs(TestFilter));
 
 % remove DC offset
 meanValue1 = mean(demodAudioMultiplexReverse1);
 demodAudioMultiplexReverse1 = demodAudioMultiplexReverse1 - meanValue1;
 
-figure;
-subplot(2,1,1);
+
+subplot(5,2,1);
 plot(t, demodAudioMultiplexReverse1, 'b')
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('1st Audio time');
-subplot(2,1,2);
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('1st Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,2);
 plot(f, abs(DemodAudioMultiplexReverse1), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('1st Audio freq');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('1st Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 meanValue2 = mean(demodAudioMultiplexReverse2);
 demodAudioMultiplexReverse2 = demodAudioMultiplexReverse2 - meanValue2;
-figure;
-subplot(2,1,1);
+subplot(5,2,3);
 plot(t, demodAudioMultiplexReverse2, 'b');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('2nd Audio time');
-subplot(2,1,2);
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('2nd Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,4);
 plot(f, abs(DemodAudioMultiplexReverse2), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('2nd Audio freq');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('2nd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 meanValue3 = mean(demodAudioMultiplexReverse3);
 demodAudioMultiplexReverse3 = demodAudioMultiplexReverse3 - meanValue3;
-figure;
-subplot(2,1,1);
+subplot(5,2,5);
 plot(t, demodAudioMultiplexReverse3, 'b');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('3rd Audio time');
-subplot(2,1,2);
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('3rd Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,6);
 plot(f, abs(DemodAudioMultiplexReverse3), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('3rd Audio freq');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('3rd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 meanValue4 = mean(demodAudioMultiplexReverse4);
 demodAudioMultiplexReverse4 = demodAudioMultiplexReverse4 - meanValue4;
-figure;
-subplot(2,1,1);
+subplot(5,2,7);
 plot(t, demodAudioMultiplexReverse4, 'b');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('4th Audio time');
-subplot(2,1,2);
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('4th Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,8);
 plot(f, abs(DemodAudioMultiplexReverse4), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('4th Audio freq');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('4th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 meanValue5 = mean(demodAudioMultiplexReverse5);
 demodAudioMultiplexReverse5 = demodAudioMultiplexReverse5 - meanValue5;
-figure;
-subplot(2,1,1);
+subplot(5,2,9);
 plot(t, demodAudioMultiplexReverse5, 'b');
-xlabel('Time (s)');
-ylabel('Amplitude');
-title('5th Audio time');
-subplot(2,1,2);
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('5th Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,10);
 plot(f, abs(DemodAudioMultiplexReverse5), 'r');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('5th Audio freq');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('5th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
+%% freq spectrums together
+figure;
+subplot(5,1,1);
+plot(f, abs(DemodAudioMultiplexReverse1), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('1st Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
+subplot(5,1,2);
+plot(f, abs(DemodAudioMultiplexReverse2), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('2nd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
+subplot(5,1,3);
+plot(f, abs(DemodAudioMultiplexReverse3), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('3rd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
+subplot(5,1,4);
+plot(f, abs(DemodAudioMultiplexReverse4), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('4th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
+subplot(5,1,5);
+plot(f, abs(DemodAudioMultiplexReverse5), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('5th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 %% 1.5 Fully de-noising audio
 
@@ -363,48 +399,170 @@ fpass = 2e3;
 bandfpass = [1.8e3 3e3];
 
 for i = 1:length(signals)
-    lowSignal = lowpass(signals{i}, fpass, fs, Steepness = 0.9, StopbandAttenuation = 60); % ImpulseResponse = 'iir');
-    bandSignal = bandstop(lowSignal, bandfpass, fs); % to see difference, set Steepness=0.85 and filteredSignals = lowSignal
+    lowSignal = lowpass(signals{i}, fpass, fs, "Steepness", 0.9, "StopbandAttenuation", 60);
+    bandSignal = bandstop(lowSignal, bandfpass, fs);
     filteredSignals.(newSignals{i}) = bandSignal;
 end
 filteredAudioMultiplexReverse1 = filteredSignals.filteredAudioMultiplexReverse1; filteredAudioMultiplexReverse2 = filteredSignals.filteredAudioMultiplexReverse2; filteredAudioMultiplexReverse3 = filteredSignals.filteredAudioMultiplexReverse3;
 filteredAudioMultiplexReverse4 = filteredSignals.filteredAudioMultiplexReverse4; filteredAudioMultiplexReverse5 = filteredSignals.filteredAudioMultiplexReverse5;
+%%
+d = designfilt('lowpassiir', 'PassbandFrequency', fpass/(fs/2), ...
+    'StopbandFrequency', (fpass+fpass*steepness)/(fs/2), ...
+    'StopbandAttenuation', stopband, 'DesignMethod', 'butter');
 
+% Visualize the filter using fvtool
+h = fvtool(d);
+
+% Set the analysis to magnitude response
+h.Analysis = 'magnitude';
+
+% Obtain the handle to the axes
+ax = get(h, 'CurrentAxes');
+
+% Set the Y-axis limits to focus on the range from 0 dB to -80 dB
+ax.YLim = [-80 0];
+
+% Optionally, limit the X-axis range, for example, from 0 to 0.5 (normalized frequency)
+ax.XLim = [0 0.5];
+%%
+d = designfilt('bandstopiir', 'FilterOrder', 10, ...
+    'HalfPowerFrequency1', bandfpass(1), 'HalfPowerFrequency2', bandfpass(2), ...
+    'DesignMethod', 'butter', 'SampleRate', fs);
+
+% Visualize the bandstop filter using fvtool
+h = fvtool(d);
+
+% Set the analysis to magnitude response
+h.Analysis = 'magnitude';
+
+% Obtain the handle to the axes
+ax = get(h, 'CurrentAxes');
+
+% Set the Y-axis limits to focus on the range from 0 dB to -80 dB
+ax.YLim = [-80 0];
+
+% Optionally, limit the X-axis range to a specific range (e.g., from 0 to 0.5 normalized frequency)
+ax.XLim = [0 0.5];
+%%
+% Design the lowpass filter
+lowpassFilter = designfilt('lowpassiir', 'PassbandFrequency', fpass/(fs/2), ...
+    'StopbandFrequency', (fpass + fpass * steepness)/(fs/2), ...
+    'StopbandAttenuation', stopband, 'DesignMethod', 'butter');
+
+% Design the bandstop filter
+bandstopFilter = designfilt('bandstopiir', 'FilterOrder', 10, ...
+    'HalfPowerFrequency1', bandfpass(1)/(fs/2), 'HalfPowerFrequency2', bandfpass(2)/(fs/2), ...
+    'DesignMethod', 'butter');
+
+% Convert the digitalFilter objects to second-order sections (SOS)
+lowpassSOS = ss2sos(lowpassFilter);
+bandstopSOS = ss2sos(bandstopFilter);
+
+% Create dfilt objects from SOS
+lowpassDfilt = dfilt.df2sos(lowpassSOS);
+bandstopDfilt = dfilt.df2sos(bandstopSOS);
+
+% Combine the filters
+combinedFilter = dfilt.cascade(lowpassDfilt, bandstopDfilt);
+
+% Visualize the combined filter using fvtool
+h = fvtool(combinedFilter);
+
+% Set the analysis to magnitude response
+h.Analysis = 'magnitude';
+
+% Obtain the handle to the axes
+ax = get(h, 'CurrentAxes');
+
+% Set the Y-axis limits to focus on the range from 0 dB to -80 dB
+ax.YLim = [-80 0];
+
+% Optionally, limit the X-axis range to a specific range (e.g., from 0 to 0.5 normalized frequency)
+ax.XLim = [0 0.5];
+
+% Function to convert digitalFilter object to SOS matrix
+function sos = ss2sos(d)
+    sos = d.Coefficients;
+end
 %% 1.5 freq check plots
 FilteredAudioMultiplexReverse1 = ft(filteredAudioMultiplexReverse1, fs); FilteredAudioMultiplexReverse2 = ft(filteredAudioMultiplexReverse2, fs); 
 FilteredAudioMultiplexReverse3 = ft(filteredAudioMultiplexReverse3, fs); FilteredAudioMultiplexReverse4 = ft(filteredAudioMultiplexReverse4, fs); 
 FilteredAudioMultiplexReverse5 = ft(filteredAudioMultiplexReverse5, fs); 
 
-figure;
-subplot(3,2,1);
-plot(f, abs(FilteredAudioMultiplexReverse1));
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('First filtered audio in freq domain');
+subplot(5,2,1);
+plot(t, filteredAudioMultiplexReverse1, 'b')
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('1st Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,2);
+plot(f, abs(FilteredAudioMultiplexReverse1), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('1st Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
-subplot(3,2,2);
-plot(f, abs(FilteredAudioMultiplexReverse2));
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Second filtered audio in freq domain');
+subplot(5,2,3);
+plot(t, filteredAudioMultiplexReverse2, 'b');
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('2nd Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,4);
+plot(f, abs(FilteredAudioMultiplexReverse2), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('2nd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
-subplot(3,2,3);
-plot(f, abs(FilteredAudioMultiplexReverse3));
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Third filtered audio in freq domain');
+subplot(5,2,5);
+plot(t, filteredAudioMultiplexReverse3, 'b');
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('3rd Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,6);
+plot(f, abs(FilteredAudioMultiplexReverse3), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('3rd Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
-subplot(3,2,4);
-plot(f, abs(FilteredAudioMultiplexReverse4));
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Fourth filtered audio in freq domain');
+subplot(5,2,7);
+plot(t, filteredAudioMultiplexReverse4, 'b');
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('4th Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,8);
+plot(f, abs(FilteredAudioMultiplexReverse4), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('4th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
-subplot(3,2,5);
-plot(f, abs(FilteredAudioMultiplexReverse5));
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Fifth filtered audio in freq domain');
+subplot(5,2,9);
+plot(t, filteredAudioMultiplexReverse5, 'b');
+xlabel('Time (s)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('5th Audio time', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+subplot(5,2,10);
+plot(f, abs(FilteredAudioMultiplexReverse5), 'r');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('5th Audio freq', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 
 
