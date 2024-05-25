@@ -21,9 +21,11 @@ t = timevec(0, samples / fs, samples);
 figure;
 subplot(2, 1, 1);
 plot(t, audioMultiplexNoisy, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('Multiplexed Audio Signal (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('Multiplexed Audio Signal (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 % Generate appropriate frequency vector.
 samples = length(audioMultiplexNoisy);
@@ -36,10 +38,11 @@ AudioMultiplexNoisy =  ft(audioMultiplexNoisy, fs);
 % Plot the frequency domain of audioMultiplexNoisy.
 subplot(2, 1, 2);
 plot(f, abs(AudioMultiplexNoisy), 'k');
-title('Multiplexed Audio Signal (Frequency Domain)');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-
+title('Multiplexed Audio Signal (Frequency Domain)', 'FontSize', 30);
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 %% 1.2 Demodulate the signals in the frequency domain, listen, and plot.
 
 % Signals probably need filtering?
@@ -65,15 +68,19 @@ FirstSignalDemodulated =  ft(firstSignalDemodulated, fs);
 figure;
 subplot(2, 1, 1);
 plot(t, firstSignalDemodulated, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('First Signal Demodulated (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('First Signal Demodulated (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 subplot(2, 1, 2);
 plot(f, abs(FirstSignalDemodulated), 'k');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('First Signal Demodulated (Frequency Domain)');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('First Signal Demodulated (Frequency Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 %% Second signal centred at 24.33 kHz
 carrierFrequency2 = 24330;
@@ -89,15 +96,19 @@ SecondSignalDemodulated =  ft(secondSignalDemodulated, fs);
 figure;
 subplot(2, 1, 1);
 plot(t, secondSignalDemodulated, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('Second Signal Demodulated (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('Second Signal Demodulated (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 subplot(2, 1, 2);
 plot(f, abs(SecondSignalDemodulated), 'k');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Second Signal Demodulated (Frequency Domain)');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Second Signal Demodulated (Frequency Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 %% Third signal centred at 40.27 kHz
 carrierFrequency2 = 40270;
@@ -113,15 +124,19 @@ ThirdSignalDemodulated =  ft(thirdSignalDemodulated, fs);
 figure;
 subplot(2, 1, 1);
 plot(t, thirdSignalDemodulated, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('Third Signal Demodulated (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('Third Signal Demodulated (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 subplot(2, 1, 2);
 plot(f, abs(ThirdSignalDemodulated), 'k');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Third Signal Demodulated (Frequency Domain)');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Third Signal Demodulated (Frequency Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 %% Fourth signal centred at 56.17 kHz
 carrierFrequency2 = 56170;
@@ -137,15 +152,19 @@ FourthSignalDemodulated =  ft(fourthSignalDemodulated, fs);
 figure;
 subplot(2, 1, 1);
 plot(t, fourthSignalDemodulated, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('Fourth Signal Demodulated (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('Fourth Signal Demodulated (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 subplot(2, 1, 2);
 plot(f, abs(FourthSignalDemodulated), 'k');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Fourth Signal Demodulated (Frequency Domain)');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Fourth Signal Demodulated (Frequency Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 %% Fifth signal centred at 72.29 kHz
 carrierFrequency2 = 72290;
@@ -161,15 +180,20 @@ FifthSignalDemodulated =  ft(fifthSignalDemodulated, fs);
 figure;
 subplot(2, 1, 1);
 plot(t, fifthSignalDemodulated, 'k');
-xlabel('Time (seconds)');
-ylabel('Amplitude');
-title('Fifth Signal Demodulated (Time Domain)');
+xlabel('Time (seconds)', 'FontSize', 30);
+ylabel('Amplitude', 'FontSize', 30);
+title('Fifth Signal Demodulated (Time Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
 
 subplot(2, 1, 2);
 plot(f, abs(FifthSignalDemodulated), 'k');
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Fifth Signal Demodulated (Frequency Domain)');
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Fifth Signal Demodulated (Frequency Domain)', 'FontSize', 30);
+ax = gca;
+ax.FontSize = 20;
+
 %% 1.3 Frequency and impulse response of the LTI system
 
 % Vout(t)/Vin(t) = h(t)
@@ -180,11 +204,14 @@ impulse(1) = 1/(1/fs);
 h_t = channel(sid, impulse, fs);
 H_f = ft(h_t, fs);
 figure;
-plot(f, abs(H_f), 'r', f, abs(AudioMultiplexNoisy), 'b');
+plot(f, abs(H_f), 'r', f, abs(AudioMultiplexNoisy), 'k');
 legend('H(f)', 'AudioMultiplexNoisy')
-xlabel('Frequency [Hz]');
-ylabel('Magnitude');
-title('Frequency response of H(f) against magntude spectrum of AudioMultiplexNoisy')
+xlabel('Frequency [Hz]', 'FontSize', 30);
+ylabel('Magnitude', 'FontSize', 30);
+title('Frequency response of H(f) against magntude spectrum of AudioMultiplexNoisy', 'FontSize', 30)
+ax = gca;
+ax.FontSize = 20;
+
 grid on;
 
 %% 1.4 Reverse distortion
