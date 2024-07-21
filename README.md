@@ -1,1 +1,1 @@
-EGB242 Assessment 2
+# Signal Processing Project
